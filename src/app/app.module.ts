@@ -1,3 +1,4 @@
+import { StopTrainingComponent } from './training/current-trainings/stop-training.component';
 import { AppRoutingModule } from './app-routing.module';
 import { PastTrainingsComponent } from './training/past-trainings/past-trainings.component';
 import { CurrentTrainingsComponent } from './training/current-trainings/current-trainings.component';
@@ -26,7 +27,8 @@ import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.com
     CurrentTrainingsComponent,
     PastTrainingsComponent,
     HeaderComponent,
-    SidenavListComponent
+    SidenavListComponent,
+    StopTrainingComponent
 
   ],
   imports: [
@@ -39,6 +41,7 @@ import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.com
     ReactiveFormsModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [StopTrainingComponent]
 })
 export class AppModule { }

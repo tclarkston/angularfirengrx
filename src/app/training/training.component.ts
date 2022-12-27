@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-training',
@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./training.component.css']
 })
 export class TrainingComponent {
-
+  ongoingTraining: boolean = false;
 }

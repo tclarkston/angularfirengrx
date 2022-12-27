@@ -1,0 +1,27 @@
+.welcome{
+  width: 100%;
+}
+
+section{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+mat-card{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* Large Screen */
+@media screen and (min-width: 600px){
+  .section{
+    flex-direction: row;
+  }
+
+  mat-card{
+    width: 600px;
+  }
+}
