@@ -1,6 +1,6 @@
 <mat-sidenav-container class="example-container">
   <mat-sidenav #sidenav mode="push" [opened]="openSidenav" style="height: 100%">
-    <app-sidenav-list></app-sidenav-list>
+    <app-sidenav-list (sidenavSelected)="sidenav.toggle()"></app-sidenav-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <app-header (sidenavToggle)="sidenav.toggle()"></app-header>

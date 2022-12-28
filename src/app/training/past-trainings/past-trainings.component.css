@@ -1,0 +1,10 @@
+.filter{
+  padding-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+input {
+  width: 40%;
+}

@@ -1,3 +1,4 @@
+import { AuthService } from './../../shared/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, NgForm, Validators } from '@angular/forms';
 
@@ -9,6 +10,9 @@ import { FormControl, NgForm, Validators } from '@angular/forms';
 export class SignupComponent implements OnInit {
   maxDate: Date = new Date();
 
+  constructor(private authService: AuthService){
+
+  }
   ngOnInit(): void {
     this.maxDate.setFullYear(this.maxDate.getFullYear() - 18)
   }
@@ -16,11 +20,15 @@ export class SignupComponent implements OnInit {
   email = new FormControl('', [Validators.required, Validators.email]);
 
   onSubmit(form: NgForm){
-    console.log(form);
+    this.authService.registerUser({
+      email: form.value.email,
+      password: form.value.password
+    })
   }
 
   getErrorMessage(){
    
     return this.email.hasError('email') ? 'Not a valid email' : '';
   }
+
 }

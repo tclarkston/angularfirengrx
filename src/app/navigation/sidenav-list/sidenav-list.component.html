@@ -1,24 +1,24 @@
 <mat-nav-list>
-  <mat-list-item [activated]="true">
-    <a matListItemTitle routerLink="/signup" (click)="close()">Signup</a>
+  <mat-list-item [activated]="true" *ngIf="!isAuth">
+    <a matListItemTitle routerLink="/signup" (click)="onClose()">Signup</a>
     <button mat-icon-button matListItemAvatar>
       <mat-icon>face</mat-icon>
     </button>
   </mat-list-item>
-  <mat-list-item [activated]="true">
-    <a matListItemTitle routerLink="/login" (click)="close()">Login</a>
+  <mat-list-item [activated]="true"  *ngIf="!isAuth">
+    <a matListItemTitle routerLink="/login" (click)="onClose()">Login</a>
     <button mat-icon-button matListItemAvatar>
       <mat-icon>input</mat-icon>
     </button>
   </mat-list-item>
-  <mat-list-item [activated]="true">
-    <a matListItemTitle routerLink="/training" (click)="close()">Training</a>
+  <mat-list-item [activated]="true"  *ngIf="isAuth">
+    <a matListItemTitle routerLink="/training" (click)="onClose()">Training</a>
     <button mat-icon-button matListItemAvatar>
       <mat-icon>fitness_center</mat-icon>
     </button>
   </mat-list-item>
-  <mat-list-item [activated]="true">
-    <a matListItemTitle routerLink="/logout" (click)="close()">Logout</a>
+  <mat-list-item [activated]="true" *ngIf="isAuth">
+    <a matListItemTitle routerLink="/logout" (click)="onLogout()">Logout</a>
     <button mat-icon-button matListItemAvatar>
       <mat-icon>eject</mat-icon>
     </button>

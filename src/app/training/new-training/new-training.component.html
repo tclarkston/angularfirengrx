@@ -1,0 +1,20 @@
+<section class="new-training">
+  <form (ngSubmit)="onStartTraining(f)" #f="ngForm">
+    <mat-card>
+      <mat-card-header>
+        <h2>Time to start a workout!</h2>
+      </mat-card-header>
+      <mat-card-content></mat-card-content>
+      <mat-form-field appearance="fill">
+        <mat-label>Exercise</mat-label>
+        <mat-select placeholder="Exercises" ngModel name="exercise" required>
+          <mat-option *ngFor="let item of exercises" [value]="item.id">{{ item.name
+            }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-card-actions>
+        <button type="Submit" mat-button [disabled]="f.invalid">Start</button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</section>
