@@ -22,6 +22,7 @@ import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
 import { AuthService } from './shared/auth.service';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAnalyticsModule,
     AngularFirestoreModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    FlexLayoutModule
   ],
   providers: [ AuthService, TrainingService ],
   bootstrap: [AppComponent],
