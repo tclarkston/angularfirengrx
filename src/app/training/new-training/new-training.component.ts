@@ -1,8 +1,9 @@
 import { IExercise } from './../models/exercise.model';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { TrainingService } from './../../shared/training.service';
+import { TrainingService } from '../training.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { UiService } from 'src/app/shared/ui.service';
 
 @Component({
   selector: 'app-new-training',
@@ -11,17 +12,23 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 })
 export class NewTrainingsComponent implements OnInit, OnDestroy {
   exercises: IExercise[];
-  sub: Subscription;
+  isLoading = true;
+  private subs = new Subscription();
 
-  constructor(private trainingService: TrainingService) {}
+  constructor(private trainingService: TrainingService, private uiService: UiService) { }
 
   ngOnInit(): void {
-    this.sub = this.trainingService.exercisesChanged.subscribe(res => this.exercises = res);
+    this.subs.add(this.uiService.loadingStateChanged.subscribe(res => {
+      this.isLoading = res;
+    }));
+    this.fetchExercises();
     this.trainingService.fetchAvailableExercises();
   }
 
   ngOnDestroy(): void {
-    this.sub.unsubscribe();
+    if (this.subs) {
+      this.subs.unsubscribe();
+    }
   }
 
   docToDomainObject = _ => {
@@ -33,5 +40,11 @@ export class NewTrainingsComponent implements OnInit, OnDestroy {
 
   onStartTraining(form: NgForm) {
     this.trainingService.startExercise(form.value.exercise);
+  }
+
+  fetchExercises() {
+    this.subs.add(this.trainingService.exercisesChanged.subscribe(res => {
+      this.exercises = res
+    }));
   }
 }

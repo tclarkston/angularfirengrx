@@ -1,5 +1,5 @@
 import { IExercise } from './../models/exercise.model';
-import { TrainingService } from './../../shared/training.service';
+import { TrainingService } from '../training.service';
 import { StopTrainingComponent } from './stop-training.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
