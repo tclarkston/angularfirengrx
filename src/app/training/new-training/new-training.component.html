@@ -5,18 +5,18 @@
         <h2>Time to start a workout!</h2>
       </mat-card-header>
       <mat-card-content>
-        <mat-form-field appearance="fill" *ngIf="!isLoading && exercises">
+        <mat-form-field appearance="fill" *ngIf="!((isLoading$ | async) && exercises$ | async)">
           <mat-label>Exercise</mat-label>
           <mat-select placeholder="Exercises" ngModel name="exercise" required>
-            <mat-option *ngFor="let item of exercises" [value]="item.id">{{ item.name }}
+            <mat-option *ngFor="let item of exercises$ | async" [value]="item.id">{{ item.name }}
             </mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-progress-spinner mode="indeterminate" *ngIf="isLoading"></mat-progress-spinner>
+        <mat-progress-spinner mode="indeterminate" *ngIf="isLoading$ | async"></mat-progress-spinner>
       </mat-card-content>
-      <mat-card-actions *ngIf="!isLoading">
-        <button *ngIf="exercises" type="Submit" mat-button [disabled]="f.invalid">Start</button>
-        <button *ngIf="!exercises" type="Submit" mat-button [disabled]="f.invalid" (click)="fetchExercises()">Fetch Again</button>
+      <mat-card-actions *ngIf="!(isLoading$ | async)">
+        <button *ngIf="exercises$ | async" type="Submit" mat-button [disabled]="f.invalid">Start</button>
+        <button *ngIf="!(exercises$ | async)" type="Submit" mat-button [disabled]="f.invalid" (click)="fetchExercises()">Fetch Again</button>
       </mat-card-actions>
     </mat-card>
   </form>

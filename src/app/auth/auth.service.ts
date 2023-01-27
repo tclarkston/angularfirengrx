@@ -1,79 +1,71 @@
-import * as fromApp from './../shared/store/app.reducer';
+import * as fromRoot from './../shared/store/app.reducer';
+import * as UI from './../shared/store/ui.actions';
+import * as Auth from './store/auth.actions';
+
 import { UiService } from '../shared/ui.service';
 import { TrainingService } from '../training/training.service';
 import { Injectable } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { Router } from "@angular/router";
-import { Subject } from "rxjs";
 import { IAuthData } from "./models/auth-data.model";
 import { Store } from '@ngrx/store';
 
 @Injectable()
 export class AuthService {
-  private isAuthenticated: boolean = false;
-  authChange = new Subject<boolean>();
 
   constructor(
-    private router: Router, 
-    private afAuth: AngularFireAuth, 
-    private trainingService: TrainingService, 
+    private router: Router,
+    private afAuth: AngularFireAuth,
+    private trainingService: TrainingService,
     private uiService: UiService,
-    private store: Store<{ui: fromApp.State}>) {
+    private store: Store<fromRoot.State>) {
   }
 
   initAuthListener() {
     this.afAuth.authState.subscribe(user => {
       if (user) {
-        this.isAuthenticated = true;
-        this.authChange.next(true);
+        this.store.dispatch(new Auth.SetAuthenticated());
         this.router.navigate(['/training'])
-      } else{
+      } else {
         this.trainingService.cancelSubscriptions();
-        this.isAuthenticated = false;
-        this.authChange.next(false);
+        this.store.dispatch(new Auth.SetUnauthenticated());
         this.router.navigate(['/login'])
       }
     })
   }
 
   registerUser(authData: IAuthData) {
-    this.store.dispatch({type: 'START_LOADING'});
+    this.store.dispatch(new UI.StartLoading());
     this.afAuth.createUserWithEmailAndPassword(
       authData.email,
       authData.password)
       .then(result => {
-        this.store.dispatch({type: 'STOP_LOADING'});
+        this.store.dispatch(new UI.StopLoading());
       })
       .catch(error => {
-        this.store.dispatch({type: 'STOP_LOADING'});
+        this.store.dispatch(new UI.StopLoading());
         this.uiService.showSnackbar(error.message, null, 3000)
       })
       ;
   }
 
   login(authData: IAuthData) {
-    // this.uiService.loadingStateChanged.next(true);
-    this.store.dispatch({type: 'START_LOADING'});
+    this.store.dispatch(new UI.StartLoading());
     this.afAuth.signInWithEmailAndPassword(authData.email, authData.password)
       .then(result => {
-        this.store.dispatch({type: 'STOP_LOADING'});
+        this.store.dispatch(new UI.StopLoading());
       })
       .catch(error => {
-        this.store.dispatch({type: 'STOP_LOADING'});
+        this.store.dispatch(new UI.StopLoading());
         this.uiService.showSnackbar(error.message, null, 3000)
       })
       ;
 
-    this.authChange.next(true)
+    this.store.dispatch(new Auth.SetAuthenticated)
   }
 
   logout() {
     this.afAuth.signOut();
-
+    this.store.dispatch(new Auth.SetUnauthenticated)
   }
-
-  isAuth(): boolean {
-    return this.isAuthenticated;
-  }
-
 }

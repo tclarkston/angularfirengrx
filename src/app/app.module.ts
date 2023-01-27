@@ -16,7 +16,7 @@ import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { StoreModule } from '@ngrx/store';
-import { appReducer } from './shared/store/app.reducer';
+import { reducers } from './shared/store/app.reducer';
 
 @NgModule({
   declarations: [
@@ -34,7 +34,7 @@ import { appReducer } from './shared/store/app.reducer';
     AngularFirestoreModule,
     FlexLayoutModule,
     AuthModule,
-    StoreModule.forRoot({ui: appReducer})
+    StoreModule.forRoot(reducers)
   ],
   providers: [ UiService, TrainingService, AuthService ],
   bootstrap: [ AppComponent ],

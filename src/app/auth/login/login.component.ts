@@ -3,7 +3,7 @@ import { UiService } from './../../shared/ui.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/auth/auth.service';
-import * as fromApp from './../../shared/store/app.reducer'
+import * as fromRoot from './../../shared/store/app.reducer'
 import { Store } from '@ngrx/store';
 @Component({
   selector: 'app-login',
@@ -23,25 +23,14 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private uiService: UiService,
-    private store: Store<{ui: fromApp.State}>) {
+    private store: Store<fromRoot.State>) {
 
   }
 
   ngOnInit(): void {
-    this.isLoading$ = this.store.select(state => state.ui.isLoading);
+    this.isLoading$ = this.store.select(fromRoot.getIsLoading);
     this.store.subscribe(data => console.log(data));
-
-    // this.subs.add(this.uiService.loadingStateChanged.subscribe(response => {
-    //   this.isLoading = response;
-    // }));
   }
-
-  // ngOnDestroy(): void {
-  //   if (this.subs) {
-  //     this.subs.unsubscribe();
-  //   }
-  // }
 
   onSubmit() {
     this.authService.login({
